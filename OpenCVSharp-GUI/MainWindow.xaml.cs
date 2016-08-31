@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using OpenCvSharp;
 using OpenCvSharp.CPlusPlus;
@@ -287,6 +288,12 @@ namespace OpenCVSharp_GUI
 
         private void enableEffect_Checked(object sender, RoutedEventArgs e)
         {
+            if (_originalMat == null)
+            {
+                this.ShowMessageAsync("Error", "You need to load a image first");
+                ((CheckBox)sender).IsChecked = false;
+                return;
+            }
             String effectName = ((CheckBox)sender).Name;
             if (effectName.Equals("Resize"))
             {
@@ -312,6 +319,22 @@ namespace OpenCVSharp_GUI
 
         private void Canny_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if ((bool)CannyFilter.IsChecked)
+            {
+                int position = _operationOrder.IndexOf("CannyFilter");
+                _operationOrder.Remove("CannyFilter");
+                _operationOrder.Insert(position, "CannyFilter");
+            }
+            
+        }
+
+        private void ResizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if ((bool)Resize.IsChecked)
+            {
+                _operationOrder.Remove("Resize");
+                _operationOrder.Add("Resize");
+            }
 
         }
 
@@ -360,14 +383,6 @@ namespace OpenCVSharp_GUI
 
         #endregion
 
-        private void ResizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if((bool)Resize.IsChecked)
-            {
-                _operationOrder.Remove("Resize");
-                _operationOrder.Add("Resize");
-            }
-            
-        }
+        
     }
 }
