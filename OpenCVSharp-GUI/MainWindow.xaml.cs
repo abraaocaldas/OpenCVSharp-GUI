@@ -260,6 +260,21 @@ namespace OpenCVSharp_GUI
             _operationOrder.Remove("CannyFilter");
         }
 
+        private void enableHistogram_Checked(object sender, RoutedEventArgs e)
+        {
+            _operationOrder.Add("Histogram");
+        }
+
+        private void enableHistogram_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _operationOrder.Remove("Histogram");
+        }
+
+        private void startHelp(object sender, RoutedEventArgs e)
+        {
+            showToolTipWindow();
+        }
+
         private void loadImage_Click(object sender, RoutedEventArgs e)
         {
             var dialogFile = new System.Windows.Forms.OpenFileDialog();
@@ -300,11 +315,9 @@ namespace OpenCVSharp_GUI
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+
         #endregion
 
-        private void cannyQuestion_Click(object sender, RoutedEventArgs e)
-        {
-            showToolTipWindow();
-        }
+        
     }
 }
