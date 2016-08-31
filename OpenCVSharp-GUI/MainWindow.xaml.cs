@@ -270,6 +270,16 @@ namespace OpenCVSharp_GUI
             _operationOrder.Remove("Histogram");
         }
 
+        private void enableDilate_Checked(object sender, RoutedEventArgs e)
+        {
+            _operationOrder.Add("Dilate");
+        }
+
+        private void enableDilate_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _operationOrder.Remove("Dilate");
+        }
+
         private void startHelp(object sender, RoutedEventArgs e)
         {
             showToolTipWindow();
@@ -314,6 +324,7 @@ namespace OpenCVSharp_GUI
             if (PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
 
 
         #endregion

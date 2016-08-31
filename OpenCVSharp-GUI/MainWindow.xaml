@@ -105,8 +105,34 @@
                         </StackPanel>
                     </Expander>
                 </ListViewItem>
-                
-                
+
+                <ListViewItem>
+                    <Expander>
+                        <Expander.Header>
+                            <Grid Margin="-5">
+                                <TextBlock Margin="5,0,5,0" FontSize="16">Dilate Image</TextBlock>
+                                <Button Name="dilateQuestion"
+                                        Click="startHelp"
+                                        HorizontalAlignment="Right"
+                                        Margin="0px,0px,5px,0px" >
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <fa:ImageAwesome Width="20" Icon="QuestionCircle"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalAlignment="Center"></fa:ImageAwesome>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Margin="10,4,0,0" Background="Transparent">
+                            <CheckBox Name="enableDilate" 
+                                  Checked="enableDilate_Checked" 
+                                  Unchecked="enableDilate_Unchecked">Enable</CheckBox>
+                        </StackPanel>
+                    </Expander>
+                </ListViewItem>
+
             </ListView>
 
         </Grid>
