@@ -24,7 +24,7 @@
 
                 <Image Name="OriginalImg" Source="{Binding OriginalImage}" Grid.Row="0"></Image>
                 <Image Name="ConvertedImg" Source="{Binding ConvertedImage}" Grid.Row="1"></Image>
-                <Button Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">Load Image</Button>
+                <Button Name="loadImage" Click="loadImage_Click"  Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">Load Image</Button>
             </Grid>
 
             <ListView Grid.Column="1">

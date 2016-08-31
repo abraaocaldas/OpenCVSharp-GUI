@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -147,6 +149,7 @@ namespace OpenCVSharp_GUI
             _operationOrder.CollectionChanged += operationOrder_CollectionChanged;
         }
 
+        #region Private Methods
         private void operationOrder_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             _convertedMat = _originalMat.Clone();
@@ -219,7 +222,7 @@ namespace OpenCVSharp_GUI
                     ConvertedImage = dest.ToBitmap().ToBitmapSource();
                     break;
                 case "Resize":
-                    Filters.ScaleImage(gray, ref dest);
+                    Filters.ScaleImage(gray, ref dest, 10);
                     ConvertedImage = dest.ToBitmap().ToBitmapSource();
                     break;
                 case "BitWise Inverter":
@@ -227,7 +230,7 @@ namespace OpenCVSharp_GUI
                     ConvertedImage = dest.ToBitmap().ToBitmapSource();
                     break;
                 case "AdaptiveThreshold":
-                    Filters.SetAdaptTreshold(gray, ref dest);
+                    Filters.SetAdaptTreshold(gray, ref dest, 10, 10, 10);
                     ConvertedImage = dest.ToBitmap().ToBitmapSource();
                     break;
                 default:
@@ -236,7 +239,17 @@ namespace OpenCVSharp_GUI
             _convertedMat = new Mat(dest);
         }
 
-        #region CheckBox Events
+        private void LoadImage(String Path)
+        {
+            _originalMat = new Bitmap(Path).ToMat();
+            _convertedMat = _originalMat.Clone();
+            OriginalImage = _originalMat.ToBitmapSource();
+            ConvertedImage = _originalMat.ToBitmapSource();
+            ResizeValue = 100;
+        }
+        #endregion
+
+        #region Events
         private void enableCanny_Checked(object sender, RoutedEventArgs e)
         {
             showToolTipWindow();
@@ -245,6 +258,29 @@ namespace OpenCVSharp_GUI
         private void enableCanny_Unchecked(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void loadImage_Click(object sender, RoutedEventArgs e)
+        {
+            var dialogFile = new System.Windows.Forms.OpenFileDialog();
+            var imageExtensions = string.Join(";", ImageCodecInfo.GetImageDecoders().Select(ici => ici.FilenameExtension));
+            dialogFile.Filter = string.Format("Images|{0}|All Files|*.*", imageExtensions);
+            var result = dialogFile.ShowDialog();
+                        
+            switch (result)
+            {
+                case System.Windows.Forms.DialogResult.OK:
+                    String selectedFile = dialogFile.FileName;
+                    if (!String.IsNullOrEmpty(selectedFile))
+                    {
+                        LoadImage(selectedFile);
+                    }
+                    break;
+                case System.Windows.Forms.DialogResult.Cancel:
+                    break;
+                default:
+                    break;
+            }
         }
         #endregion
 
@@ -264,5 +300,7 @@ namespace OpenCVSharp_GUI
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        
     }
 }

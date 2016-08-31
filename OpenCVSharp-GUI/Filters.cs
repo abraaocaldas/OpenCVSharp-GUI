@@ -14,12 +14,6 @@ namespace OpenCVSharp_GUI
 
         public static Filters Instance { get { return lazy.Value; } }
 
-
-        private static double ThresholdValue;
-        private static int AdaptiveVal1;
-        private static int AdaptiveVal2;
-        private static int ResizeValue;
-
         public static void ErodeImage(IplImage gray, ref IplImage eroded)
         {
             OpenCvSharp.Cv.Erode(gray, eroded);
@@ -35,9 +29,9 @@ namespace OpenCVSharp_GUI
             OpenCvSharp.Cv.EqualizeHist(gray, equalized);
         }
 
-        public static void SetAdaptTreshold(IplImage gray, ref IplImage threshold)
+        public static void SetAdaptTreshold(IplImage gray, ref IplImage threshold, double ThresholdValue, int AdaptativeVal1, int AdaptativeVal2)
         {
-            gray.AdaptiveThreshold(threshold, ThresholdValue, AdaptiveThresholdType.GaussianC, ThresholdType.Binary, AdaptiveVal1, AdaptiveVal2);
+            gray.AdaptiveThreshold(threshold, ThresholdValue, AdaptiveThresholdType.GaussianC, ThresholdType.Binary, AdaptativeVal1, AdaptativeVal1);
         }
 
         public static void EdgeEnhancement(IplImage gray, ref IplImage enhancedImage)
@@ -77,9 +71,9 @@ namespace OpenCVSharp_GUI
             denoised = nOutput.ToIplImage().Clone();
         }
 
-        public static void ScaleImage(IplImage gray, ref IplImage scalled)
+        public static void ScaleImage(IplImage gray, ref IplImage scalled, double ResizeValue)
         {
-            double RValue = Double.Parse(ResizeValue.ToString());
+            double RValue = ResizeValue;
             int width = (int)(gray.Width * (RValue / 100));
             int height = (int)(gray.Height * (RValue / 100));
             scalled = new IplImage(new CvSize(width, height), BitDepth.U8, 1);
