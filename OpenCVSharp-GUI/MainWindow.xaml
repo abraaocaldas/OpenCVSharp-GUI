@@ -8,7 +8,9 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         WindowState="Maximized"
-        Title="MainWindow" Height="350" Width="525">
+        ResizeMode="NoResize"
+        Title="OpenCVSharp - GUI"
+        Height="350" Width="525">
     <Grid x:Name="LayoutRoot">
         <Grid  Background="White">
             <Grid.ColumnDefinitions>
@@ -46,7 +48,7 @@
                     <Expander>
                         <Expander.Header>
                             <Grid Margin="-5">
-                                <TextBlock Margin="5,0,5,0" FontSize="16"> Canny Filter</TextBlock>
+                                <TextBlock Margin="5,0,5,0" FontSize="16">Canny Filter</TextBlock>
                                 <Button Name="cannyQuestion"
                                         Click="startHelp"
                                         HorizontalAlignment="Right"
@@ -62,18 +64,20 @@
                             </Grid>
                         </Expander.Header>
                         <StackPanel Margin="10,4,0,0" Background="Transparent">
-                            <CheckBox Name="enableCanny" 
-                                  Checked="enableCanny_Checked" 
-                                  Unchecked="enableCanny_Unchecked">Enable</CheckBox>
+                            <CheckBox Name="CannyFilter" 
+                                  Checked="enableEffect_Checked" 
+                                  Unchecked="enableEffect_Unchecked">Enable</CheckBox>
                             <TextBlock Text="{Binding CannyValue1, StringFormat='Canny Value 1 - {0}'}"></TextBlock>
                             <Slider Value="{Binding CannyValue1}"
                                 Minimum="0"
                                 Maximum="255"
+                                ValueChanged="Canny_ValueChanged"
                                 />
                             <TextBlock Text="{Binding CannyValue2, StringFormat='Canny Value 2 - {0}'}"></TextBlock>
                             <Slider Value="{Binding CannyValue2}"
                                 Minimum="0"
                                 Maximum="255"
+                                ValueChanged="Canny_ValueChanged"
                                 />
                         </StackPanel>
                     </Expander>
@@ -99,9 +103,9 @@
                             </Grid>
                         </Expander.Header>
                         <StackPanel Margin="10,4,0,0" Background="Transparent">
-                            <CheckBox Name="enableHistogram" 
-                                  Checked="enableHistogram_Checked" 
-                                  Unchecked="enableHistogram_Unchecked">Enable</CheckBox>
+                            <CheckBox Name="Histogram" 
+                                  Checked="enableEffect_Checked" 
+                                  Unchecked="enableEffect_Unchecked">Enable</CheckBox>
                         </StackPanel>
                     </Expander>
                 </ListViewItem>
@@ -126,9 +130,100 @@
                             </Grid>
                         </Expander.Header>
                         <StackPanel Margin="10,4,0,0" Background="Transparent">
-                            <CheckBox Name="enableDilate" 
-                                  Checked="enableDilate_Checked" 
-                                  Unchecked="enableDilate_Unchecked">Enable</CheckBox>
+                            <CheckBox Name="Dilate" 
+                                  Checked="enableEffect_Checked" 
+                                  Unchecked="enableEffect_Unchecked">Enable</CheckBox>
+                        </StackPanel>
+                    </Expander>
+                </ListViewItem>
+
+                <ListViewItem>
+                    <Expander>
+                        <Expander.Header>
+                            <Grid Margin="-5">
+                                <TextBlock Margin="5,0,5,0" FontSize="16">Erode Image</TextBlock>
+                                <Button Name="erodeQuestion"
+                                        Click="startHelp"
+                                        HorizontalAlignment="Right"
+                                        Margin="0px,0px,5px,0px" >
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <fa:ImageAwesome Width="20" Icon="QuestionCircle"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalAlignment="Center"></fa:ImageAwesome>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Margin="10,4,0,0" Background="Transparent">
+                            <CheckBox Name="Erode" 
+                                  Checked="enableEffect_Checked" 
+                                  Unchecked="enableEffect_Unchecked">Enable</CheckBox>
+                        </StackPanel>
+                    </Expander>
+                </ListViewItem>
+
+                <ListViewItem>
+                    <Expander>
+                        <Expander.Header>
+                            <Grid Margin="-5">
+                                <TextBlock Margin="5,0,5,0" FontSize="16">Fast Denoiser</TextBlock>
+                                <Button Name="denoiserQuestion"
+                                        Click="startHelp"
+                                        HorizontalAlignment="Right"
+                                        Margin="0px,0px,5px,0px" >
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <fa:ImageAwesome Width="20" Icon="QuestionCircle"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalAlignment="Center"></fa:ImageAwesome>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Margin="10,4,0,0" Background="Transparent">
+                            <CheckBox Name="Denoiser" 
+                                  Checked="enableEffect_Checked" 
+                                  Unchecked="enableEffect_Unchecked">Enable</CheckBox>
+                        </StackPanel>
+                    </Expander>
+                </ListViewItem>
+
+                <ListViewItem>
+                    <Expander>
+                        <Expander.Header>
+                            <Grid Margin="-5">
+                                <TextBlock Margin="5,0,5,0" FontSize="16">Image Resize</TextBlock>
+                                <Button Name="resizeQuestion"
+                                        Click="startHelp"
+                                        HorizontalAlignment="Right"
+                                        Margin="0px,0px,5px,0px" >
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <fa:ImageAwesome Width="20" Icon="QuestionCircle"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalAlignment="Center"></fa:ImageAwesome>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Margin="10,4,0,0" Background="Transparent">
+                            <TextBlock>Resize will always take place first on the order of operations.</TextBlock>
+                            <CheckBox Name="Resize" 
+                                  Checked="enableEffect_Checked" 
+                                  Unchecked="enableEffect_Unchecked">Enable</CheckBox>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="Resolution {0} - {1}">
+                                        <Binding Path="ImageHeight"/>
+                                        <Binding Path="ImageWidth"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <Slider Name="ResizeSlider"  Minimum="1" Maximum="100" Value="{Binding ResizeValue}" ValueChanged="ResizeSlider_ValueChanged"></Slider>
                         </StackPanel>
                     </Expander>
                 </ListViewItem>

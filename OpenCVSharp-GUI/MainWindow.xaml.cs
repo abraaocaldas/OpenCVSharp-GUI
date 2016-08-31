@@ -33,6 +33,8 @@ namespace OpenCVSharp_GUI
         private ObservableCollection<String> _operationOrder = new ObservableCollection<String>();
         private Mat _originalMat;
         private Mat _convertedMat;
+        private int _imageWidth;
+        private int _imageHeight;
         private BitmapSource _originalImage;
         private BitmapSource _convertedImage;
         private int _cannyValue1;
@@ -140,6 +142,33 @@ namespace OpenCVSharp_GUI
                 OnPropertyChanged("ThresholdValue");
             }
         }
+
+        public int ImageWidth
+        {
+            get
+            {
+                return _imageWidth;
+            }
+            set
+            {
+                _imageWidth = value;
+                OnPropertyChanged("ImageWidth");
+            }
+        }
+
+        public int ImageHeight
+        {
+            get
+            {
+                return _imageHeight;
+            }
+            set
+            {
+                _imageHeight = value;
+                OnPropertyChanged("ImageHeight");
+            }
+        }
+
         #endregion
 
         public MainWindow()
@@ -222,7 +251,7 @@ namespace OpenCVSharp_GUI
                     ConvertedImage = dest.ToBitmap().ToBitmapSource();
                     break;
                 case "Resize":
-                    Filters.ScaleImage(gray, ref dest, 10);
+                    Filters.ScaleImage(gray, ref dest, ResizeValue);
                     ConvertedImage = dest.ToBitmap().ToBitmapSource();
                     break;
                 case "BitWise Inverter":
@@ -245,44 +274,41 @@ namespace OpenCVSharp_GUI
             _convertedMat = _originalMat.Clone();
             OriginalImage = _originalMat.ToBitmapSource();
             ConvertedImage = _originalMat.ToBitmapSource();
+            ImageWidth = _originalMat.Width;
+            ImageHeight = _originalMat.Height;
             ResizeValue = 100;
         }
         #endregion
 
         #region Events
-        private void enableCanny_Checked(object sender, RoutedEventArgs e)
+
+        private void enableEffect_Checked(object sender, RoutedEventArgs e)
         {
-            _operationOrder.Add("CannyFilter");
+            String effectName = ((CheckBox)sender).Name;
+            if (effectName.Equals("Resize"))
+            {
+                _operationOrder.Insert(0, effectName);
+            }
+            else
+            {
+                _operationOrder.Add(effectName);
+            }
         }
 
-        private void enableCanny_Unchecked(object sender, RoutedEventArgs e)
+        private void enableEffect_Unchecked(object sender, RoutedEventArgs e)
         {
-            _operationOrder.Remove("CannyFilter");
-        }
-
-        private void enableHistogram_Checked(object sender, RoutedEventArgs e)
-        {
-            _operationOrder.Add("Histogram");
-        }
-
-        private void enableHistogram_Unchecked(object sender, RoutedEventArgs e)
-        {
-            _operationOrder.Remove("Histogram");
-        }
-
-        private void enableDilate_Checked(object sender, RoutedEventArgs e)
-        {
-            _operationOrder.Add("Dilate");
-        }
-
-        private void enableDilate_Unchecked(object sender, RoutedEventArgs e)
-        {
-            _operationOrder.Remove("Dilate");
+            String effectName = ((CheckBox)sender).Name;
+            _operationOrder.Remove(effectName);
         }
 
         private void startHelp(object sender, RoutedEventArgs e)
         {
             showToolTipWindow();
+        }
+
+        private void Canny_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
         }
 
         private void loadImage_Click(object sender, RoutedEventArgs e)
@@ -327,8 +353,12 @@ namespace OpenCVSharp_GUI
 
 
 
+
         #endregion
 
-        
+        private void ResizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
     }
 }
