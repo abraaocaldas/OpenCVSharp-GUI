@@ -252,12 +252,12 @@ namespace OpenCVSharp_GUI
         #region Events
         private void enableCanny_Checked(object sender, RoutedEventArgs e)
         {
-            showToolTipWindow();
+            _operationOrder.Add("CannyFilter");
         }
 
         private void enableCanny_Unchecked(object sender, RoutedEventArgs e)
         {
-
+            _operationOrder.Remove("CannyFilter");
         }
 
         private void loadImage_Click(object sender, RoutedEventArgs e)
