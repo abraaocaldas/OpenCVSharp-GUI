@@ -85,7 +85,7 @@ namespace OpenCVSharp_GUI
             set
             {
                 _cannyValue2 = value;
-                OnPropertyChanged("CannyValue1");
+                OnPropertyChanged("CannyValue2");
             }
         }
 

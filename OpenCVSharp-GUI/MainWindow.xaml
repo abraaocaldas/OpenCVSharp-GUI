@@ -47,12 +47,12 @@
                             <CheckBox Name="enableCanny" 
                                   Checked="enableCanny_Checked" 
                                   Unchecked="enableCanny_Unchecked">Enable</CheckBox>
-                            <TextBlock>Canny Value 1</TextBlock>
+                            <TextBlock Text="{Binding CannyValue1, StringFormat='Canny Value 1 - {0}'}"></TextBlock>
                             <Slider Value="{Binding CannyValue1}"
                                 Minimum="0"
                                 Maximum="255"
                                 />
-                            <TextBlock>Canny Value 2</TextBlock>
+                            <TextBlock Text="{Binding CannyValue2, StringFormat='Canny Value 2 - {0}'}"></TextBlock>
                             <Slider Value="{Binding CannyValue2}"
                                 Minimum="0"
                                 Maximum="255"
