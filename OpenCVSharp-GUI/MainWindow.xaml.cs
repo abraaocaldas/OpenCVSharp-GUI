@@ -287,7 +287,7 @@ namespace OpenCVSharp_GUI
         #region Window Events
         private async void showToolTipWindow()
         {
-            await this.ShowChildWindowAsync(new ToolTipWindow() { IsModal = true, AllowMove = true }, LayoutRoot);
+            await this.ShowChildWindowAsync(new ToolTipWindow() { IsModal = true, EnableDropShadow=true}, ChildWindowManager.OverlayFillBehavior.FullWindow);
         }
         #endregion
 
@@ -299,8 +299,12 @@ namespace OpenCVSharp_GUI
             if (PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
 
-        
+        private void cannyQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            showToolTipWindow();
+        }
     }
 }

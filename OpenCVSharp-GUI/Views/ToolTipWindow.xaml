@@ -8,14 +8,26 @@
              GlowBrush="{DynamicResource AccentColorBrush}"
              BorderBrush="{DynamicResource AccentColorBrush}"
 			 BorderThickness="1"
+             HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Stretch"
+             Padding="35px"
              ShowCloseButton="True"
+             ShowTitleBar="True"
+             Title="TestChild 1"             
              mc:Ignorable="d" 
+             MinHeight="100"
+             MinWidth="100"
              d:DesignHeight="300" d:DesignWidth="300">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <StackPanel>
+   
+    <!--<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
             <TextBlock>ToolTip Window</TextBlock>
             <TextBlock>A very good text</TextBlock>
-        </StackPanel>
-    </ScrollViewer>
+        </Grid>
+    </ScrollViewer>-->
+    <Grid
+        
+        HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"></Grid>
    
 </simpleChildWindow:ChildWindow>

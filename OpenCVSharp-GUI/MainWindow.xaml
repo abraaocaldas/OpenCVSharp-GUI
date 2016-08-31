@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:OpenCVSharp_GUI"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         WindowState="Maximized"
         Title="MainWindow" Height="350" Width="525">
@@ -42,7 +43,25 @@
                 </ListView.ItemContainerStyle>
 
                 <ListViewItem>
-                    <Expander Header="Canny Filter">
+                    <Expander>
+                        <Expander.Header>
+                            <Grid Margin="-5">
+                                <TextBlock Margin="5,0,5,0" FontSize="16"> Canny Filter</TextBlock>
+                                <Button Name="cannyQuestion"
+                                        Click="cannyQuestion_Click"
+                                        HorizontalAlignment="Right"
+                                        Margin="0px,0px,5px,0px" >
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <fa:ImageAwesome Width="20" Icon="QuestionCircle"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalAlignment="Center"></fa:ImageAwesome>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                               
+                            </Grid>
+                        </Expander.Header>
                         <StackPanel Margin="10,4,0,0" Background="Transparent">
                             <CheckBox Name="enableCanny" 
                                   Checked="enableCanny_Checked" 
