@@ -33,8 +33,8 @@ namespace OpenCVSharp_GUI
         private ObservableCollection<String> _operationOrder = new ObservableCollection<String>();
         private Mat _originalMat;
         private Mat _convertedMat;
-        private int _imageWidth;
-        private int _imageHeight;
+        private double _imageWidth;
+        private double _imageHeight;
         private BitmapSource _originalImage;
         private BitmapSource _convertedImage;
         private int _cannyValue1;
@@ -143,7 +143,7 @@ namespace OpenCVSharp_GUI
             }
         }
 
-        public int ImageWidth
+        public double ImageWidth
         {
             get
             {
@@ -156,7 +156,7 @@ namespace OpenCVSharp_GUI
             }
         }
 
-        public int ImageHeight
+        public double ImageHeight
         {
             get
             {
@@ -181,7 +181,7 @@ namespace OpenCVSharp_GUI
         #region Private Methods
         private void operationOrder_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            _convertedMat = _originalMat.Clone();
+            _convertedMat = _originalMat;
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
                 foreach (var item in _operationOrder)
@@ -208,6 +208,7 @@ namespace OpenCVSharp_GUI
             {
                 ConvertedImage = OriginalImage;
             }
+            GC.Collect();
         }
 
         private void ExecuteTransformation(Mat image, String transformation)
@@ -253,6 +254,8 @@ namespace OpenCVSharp_GUI
                 case "Resize":
                     Filters.ScaleImage(gray, ref dest, ResizeValue);
                     ConvertedImage = dest.ToBitmap().ToBitmapSource();
+                    ImageWidth = _convertedImage.Width;
+                    ImageHeight = _convertedImage.Height;
                     break;
                 case "BitWise Inverter":
                     Filters.InvertImage(gray, ref dest);
@@ -299,6 +302,7 @@ namespace OpenCVSharp_GUI
         {
             String effectName = ((CheckBox)sender).Name;
             _operationOrder.Remove(effectName);
+            ResizeValue = 100;
         }
 
         private void startHelp(object sender, RoutedEventArgs e)
@@ -358,7 +362,12 @@ namespace OpenCVSharp_GUI
 
         private void ResizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-
+            if((bool)Resize.IsChecked)
+            {
+                _operationOrder.Remove("Resize");
+                _operationOrder.Add("Resize");
+            }
+            
         }
     }
 }
