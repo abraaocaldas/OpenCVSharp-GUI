@@ -40,12 +40,18 @@ namespace OpenCVSharp_GUI
         private BitmapSource _convertedImage;
         private int _cannyValue1;
         private int _cannyValue2;
-        private int _thrsvalue;
+        private int _thrsvalue = 1;
         private int _adpt1;
         private int _adpt2;
         private int _resizeValue;
+        private int _blockSize = 3;
+        private int _cValue = 1;
+        private AdaptiveThresholdType _adptthresholdType;
+        private ThresholdType _thsType;
+
 
         #region Public Properties
+        public static MainWindow Instance { get; private set; }
         public BitmapSource OriginalImage
         {
             get
@@ -170,11 +176,76 @@ namespace OpenCVSharp_GUI
             }
         }
 
+        public int BlockSize
+        {
+            get
+            {
+                return _blockSize;
+            }
+            set
+            {
+                _blockSize = value;
+                OnPropertyChanged("BlockSize");
+            }
+        }  
+
+        public int CValue
+        {
+            get
+            {
+                return _cValue;
+            }
+            set
+            {
+                _cValue = value;
+                OnPropertyChanged("CValue");
+            }
+        }
+
+        public AdaptiveThresholdType AdptThresholdType
+        {
+            get { return _adptthresholdType; }
+            set
+            {
+                _adptthresholdType = value;
+                OnPropertyChanged("ThresholdType");
+            }
+        }
+
+        public IEnumerable<AdaptiveThresholdType> AdptThresholdTypes
+        {
+            get
+            {
+                return Enum.GetValues(typeof(AdaptiveThresholdType)).Cast<AdaptiveThresholdType>();
+            }
+        }
+
+        public ThresholdType ThsType
+        {
+            get
+            {
+                return _thsType;
+            }
+            set
+            {
+                _thsType = value;
+                OnPropertyChanged("ThsType");
+            }
+        }
+
+        public IEnumerable<ThresholdType> ThsTypes
+        {
+            get
+            {
+                return Enum.GetValues(typeof(ThresholdType)).Cast<ThresholdType>();
+            }
+        }
         #endregion
 
         public MainWindow()
         {
             InitializeComponent();
+            Instance = this;
             DataContext = this;
             _operationOrder.CollectionChanged += operationOrder_CollectionChanged;
         }
@@ -258,12 +329,12 @@ namespace OpenCVSharp_GUI
                     ImageWidth = _convertedImage.Width;
                     ImageHeight = _convertedImage.Height;
                     break;
-                case "BitWise Inverter":
+                case "BitWiseInverter":
                     Filters.InvertImage(gray, ref dest);
                     ConvertedImage = dest.ToBitmap().ToBitmapSource();
                     break;
                 case "AdaptiveThreshold":
-                    Filters.SetAdaptTreshold(gray, ref dest, 10, 10, 10);
+                    Filters.SetAdaptTreshold(gray, ref dest, AdptThresholdType, ThsType, ThresholdValue, BlockSize, CValue);
                     ConvertedImage = dest.ToBitmap().ToBitmapSource();
                     break;
                 default:
@@ -338,6 +409,17 @@ namespace OpenCVSharp_GUI
 
         }
 
+        private void UpdateAdaptivethreshold(object sender, RoutedEventArgs e)
+        {
+            if ((bool)AdaptiveThreshold.IsChecked)
+            {
+                int position = _operationOrder.IndexOf("AdaptiveThreshold");
+                _operationOrder.Remove("AdaptiveThreshold");
+                _operationOrder.Insert(position, "AdaptiveThreshold");
+            }
+            
+        }
+
         private void loadImage_Click(object sender, RoutedEventArgs e)
         {
             var dialogFile = new System.Windows.Forms.OpenFileDialog();
@@ -367,6 +449,21 @@ namespace OpenCVSharp_GUI
         {
             await this.ShowChildWindowAsync(new ToolTipWindow() { IsModal = true, EnableDropShadow=true}, ChildWindowManager.OverlayFillBehavior.FullWindow);
         }
+
+        public async Task ClearDialogs()
+        {
+            var oldDialog = await MainWindow.Instance.GetCurrentDialogAsync<BaseMetroDialog>();
+            if (oldDialog != null)
+                await MainWindow.Instance.HideMetroDialogAsync(oldDialog);
+        }
+
+        public async Task OpenDialog(String title, String message)
+        {
+            await ClearDialogs();
+
+            await this.ShowMessageAsync(title, message);
+        }
+
         #endregion
 
         #region INotifyPropertyChanged

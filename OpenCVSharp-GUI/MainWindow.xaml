@@ -228,6 +228,97 @@
                     </Expander>
                 </ListViewItem>
 
+                <ListViewItem>
+                    <Expander>
+                        <Expander.Header>
+                            <Grid Margin="-5">
+                                <TextBlock Margin="5,0,5,0" FontSize="16">BitWise Inverter</TextBlock>
+                                <Button Name="bitwiserQuestion"
+                                        Click="startHelp"
+                                        HorizontalAlignment="Right"
+                                        Margin="0px,0px,5px,0px" >
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <fa:ImageAwesome Width="20" Icon="QuestionCircle"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalAlignment="Center"></fa:ImageAwesome>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Margin="10,4,0,0" Background="Transparent">
+                            <CheckBox Name="BitWiseInverter" 
+                                  Checked="enableEffect_Checked" 
+                                  Unchecked="enableEffect_Unchecked">Enable</CheckBox>
+                        </StackPanel>
+                    </Expander>
+                </ListViewItem>
+
+                <ListViewItem>
+                    <Expander>
+                        <Expander.Header>
+                            <Grid Margin="-5">
+                                <TextBlock Margin="5,0,5,0" FontSize="16">Adaptive Threshold</TextBlock>
+                                <Button Name="adptTreshQuestion"
+                                        Click="startHelp"
+                                        HorizontalAlignment="Right"
+                                        Margin="0px,0px,5px,0px" >
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <fa:ImageAwesome Width="20" Icon="QuestionCircle"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalAlignment="Center"></fa:ImageAwesome>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Margin="10,4,0,0" Background="Transparent">
+                            <CheckBox Name="AdaptiveThreshold" 
+                                  Checked="enableEffect_Checked" 
+                                  Unchecked="enableEffect_Unchecked">Enable</CheckBox>
+                            <TextBlock>Adaptive Threshold Type</TextBlock>
+                            <ComboBox ItemsSource="{Binding AdptThresholdTypes}" 
+                                      SelectedItem="{Binding AdptThresholdType}"
+                                      SelectionChanged="UpdateAdaptivethreshold"
+                                      ></ComboBox>
+                            <TextBlock>Threshold Type</TextBlock>
+                            <ComboBox ItemsSource="{Binding ThsTypes}" 
+                                      SelectedItem="{Binding ThsType}"
+                                      SelectionChanged="UpdateAdaptivethreshold"
+                                      ></ComboBox>
+                            <TextBlock>Threshold Value</TextBlock>
+                            <Controls:NumericUpDown Name="thsValue"
+                                                    InterceptArrowKeys="True"
+                                                    InterceptMouseWheel="True"
+                                                    Minimum="1"
+                                                    Maximum="255"
+                                                    Value="{Binding ThresholdValue}"
+                                                    ValueChanged="UpdateAdaptivethreshold"
+                                                    ></Controls:NumericUpDown>
+                            <TextBlock>Block Size</TextBlock>
+                            <Controls:NumericUpDown Name="udBlockSize"
+                                                    InterceptArrowKeys="True"
+                                                    InterceptMouseWheel="True"
+                                                    Minimum="3"
+                                                    Maximum="255"
+                                                    Interval="2"
+                                                    Value="{Binding BlockSize}"
+                                                    ValueChanged="UpdateAdaptivethreshold"
+                                                    ></Controls:NumericUpDown>
+                            <TextBlock>C Value</TextBlock>
+                            <Controls:NumericUpDown Name="udCValue"
+                                                    InterceptArrowKeys="True"
+                                                    InterceptMouseWheel="True"
+                                                    Minimum="1"
+                                                    Value="{Binding CValue}"
+                                                    ValueChanged="UpdateAdaptivethreshold"
+                                                    ></Controls:NumericUpDown>
+                        </StackPanel>
+                    </Expander>
+                </ListViewItem>
+
             </ListView>
 
         </Grid>

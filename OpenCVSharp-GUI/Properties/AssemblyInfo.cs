@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("OpenCVSharp-GUI")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("O visual tool for OpenCVSharp")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OpenCVSharp-GUI")]

@@ -11,27 +11,35 @@ namespace OpenCVSharp_GUI
     public sealed class Filters
     {
         private static readonly Lazy<Filters> lazy = new Lazy<Filters>(() => new Filters());
-
+        
         public static Filters Instance { get { return lazy.Value; } }
 
         public static void ErodeImage(IplImage gray, ref IplImage eroded)
         {
-            OpenCvSharp.Cv.Erode(gray, eroded);
+            Cv.Erode(gray, eroded);
         }
 
         public static void DilateImage(IplImage gray, ref IplImage dilated)
         {
-            OpenCvSharp.Cv.Dilate(gray, dilated);
+            Cv.Dilate(gray, dilated);
         }
 
         public static void HistogramEqualize(IplImage gray, ref IplImage equalized)
         {
-            OpenCvSharp.Cv.EqualizeHist(gray, equalized);
+            Cv.EqualizeHist(gray, equalized);
         }
 
-        public static void SetAdaptTreshold(IplImage gray, ref IplImage threshold, double ThresholdValue, int AdaptativeVal1, int AdaptativeVal2)
+        public static void SetAdaptTreshold(IplImage gray, ref IplImage threshold, AdaptiveThresholdType aptTValue, ThresholdType thsType, double ThresholdValue, int AdaptativeVal1, int AdaptativeVal2)
         {
-            gray.AdaptiveThreshold(threshold, ThresholdValue, AdaptiveThresholdType.GaussianC, ThresholdType.Binary, AdaptativeVal1, AdaptativeVal1);
+            try
+            {
+                gray.AdaptiveThreshold(threshold, ThresholdValue, aptTValue, thsType, AdaptativeVal1, AdaptativeVal1);
+            }
+            catch(Exception e)
+            {
+                MainWindow.Instance.OpenDialog("Invalid value combination", e.Message);
+            }
+            
         }
 
         public static void EdgeEnhancement(IplImage gray, ref IplImage enhancedImage)
