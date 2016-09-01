@@ -46,6 +46,8 @@ namespace OpenCVSharp_GUI
         private int _resizeValue;
         private int _blockSize = 3;
         private int _cValue = 1;
+        private int _intensityValue = 1;
+        private int _intensityCount = 0;
         private AdaptiveThresholdType _adptthresholdType;
         private ThresholdType _thsType;
 
@@ -202,6 +204,32 @@ namespace OpenCVSharp_GUI
             }
         }
 
+        public int IntensityValue
+        {
+            get
+            {
+                return _intensityValue;
+            }
+            set
+            {
+                _intensityValue = value;
+                OnPropertyChanged("IntensityValue");
+            }
+        }
+
+        public int IntensityCount
+        {
+            get
+            {
+                return _intensityCount;
+            }
+            set
+            {
+                _intensityCount = value;
+                OnPropertyChanged("IntensityCount");
+            }
+        }
+
         public AdaptiveThresholdType AdptThresholdType
         {
             get { return _adptthresholdType; }
@@ -337,6 +365,10 @@ namespace OpenCVSharp_GUI
                     Filters.SetAdaptTreshold(gray, ref dest, AdptThresholdType, ThsType, ThresholdValue, BlockSize, CValue);
                     ConvertedImage = dest.ToBitmap().ToBitmapSource();
                     break;
+                case "CountPixelByIntensity":
+                    IntensityCount = Filters.CountPixelByIntensity(gray, IntensityValue);
+                    ConvertedImage = gray.ToBitmap().ToBitmapSource();
+                    break;
                 default:
                     break;
             }
@@ -418,6 +450,16 @@ namespace OpenCVSharp_GUI
                 _operationOrder.Insert(position, "AdaptiveThreshold");
             }
             
+        }
+
+        private void UpdateIntensityCount(object sender, RoutedEventArgs e)
+        {
+            if ((bool)CountPixelByIntensity.IsChecked)
+            {
+                int position = _operationOrder.IndexOf("CountPixelByIntensity");
+                _operationOrder.Remove("CountPixelByIntensity");
+                _operationOrder.Insert(position, "CountPixelByIntensity");
+            }
         }
 
         private void loadImage_Click(object sender, RoutedEventArgs e)

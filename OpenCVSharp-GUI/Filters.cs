@@ -49,7 +49,7 @@ namespace OpenCVSharp_GUI
                     };
             CvMat kernel = new CvMat(5, 5, MatrixType.U8C1, data);
             Cv.Normalize(kernel, kernel, 8, 0, NormType.L1);
-            OpenCvSharp.Cv.Filter2D(gray, enhancedImage, kernel);
+            Cv.Filter2D(gray, enhancedImage, kernel);
         }
 
         public static void CannyFilter(IplImage gray, ref IplImage canny, int value1, int value2)
@@ -94,6 +94,23 @@ namespace OpenCVSharp_GUI
             Mat tempOut = new Mat();
             Cv2.BitwiseNot(temp, tempOut);
             tempOut.ToIplImage().Copy(inverted);
+        }
+
+        public static int CountPixelByIntensity(IplImage gray, int pixelValue)
+        {
+            Mat m = new Mat(gray);
+            int i = 0;
+            for (int y = 0; y < gray.Height; y++)
+            {
+                for (int x = 0; x < gray.Width; x++)
+                {
+                   if((int)m.At<Vec3b>(y, x).Item0 >= pixelValue)
+                    {
+                        i++;
+                    }
+                }
+            }
+            return i;
         }
     }
 }

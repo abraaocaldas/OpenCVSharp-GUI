@@ -319,6 +319,41 @@
                     </Expander>
                 </ListViewItem>
 
+                <ListViewItem>
+                    <Expander>
+                        <Expander.Header>
+                            <Grid Margin="-5">
+                                <TextBlock Margin="5,0,5,0" FontSize="16">Count Pixel By Intensity</TextBlock>
+                                <Button Name="intensityQuestion"
+                                        Click="startHelp"
+                                        HorizontalAlignment="Right"
+                                        Margin="0px,0px,5px,0px" >
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <fa:ImageAwesome Width="20" Icon="QuestionCircle"
+                                                             VerticalAlignment="Center"
+                                                             HorizontalAlignment="Center"></fa:ImageAwesome>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Expander.Header>
+                        <StackPanel Margin="10,4,0,0" Background="Transparent">
+                            <CheckBox Name="CountPixelByIntensity" 
+                                  Checked="enableEffect_Checked" 
+                                  Unchecked="enableEffect_Unchecked">Enable</CheckBox>
+                            <Controls:NumericUpDown Name="intensityValue"
+                                                    InterceptArrowKeys="True"
+                                                    InterceptMouseWheel="True"
+                                                    Minimum="1"
+                                                    Value="{Binding IntensityValue}"
+                                                    ValueChanged="UpdateIntensityCount"
+                                                    ></Controls:NumericUpDown>
+                            <TextBlock Text="{Binding IntensityCount, StringFormat='Pixel Count : {0}'}"></TextBlock>
+                        </StackPanel>
+                    </Expander>
+                </ListViewItem>
+
             </ListView>
 
         </Grid>
